@@ -1,4 +1,9 @@
 import qrcode  # Mengimpor modul qrcode untuk membuat QR code
+import logging  # Mengimpor modul logging untuk logging aktivitas
+
+# Konfigurasi logging
+logging.basicConfig(filename='qr_code_generator.log', level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
 def generate_qr_code(data, filename, version=1, error_correction=qrcode.constants.ERROR_CORRECT_L,
                      box_size=10, border=4, fill_color="black", back_color="white"):
@@ -13,7 +18,7 @@ def generate_qr_code(data, filename, version=1, error_correction=qrcode.constant
     qr.make(fit=True)  # Membuat QR code dengan ukuran yang sesuai
     qr_img = qr.make_image(fill_color=fill_color, back_color=back_color)  # Membuat gambar QR code dengan warna yang ditentukan
     qr_img.save(filename)  # Menyimpan gambar QR code dengan nama file yang ditentukan
-    print(f"QR code generated and saved as {filename}")  # Menampilkan pesan bahwa QR code telah berhasil dibuat dan disimpan
+    logging.info(f"QR code generated and saved as {filename}")  # Log pesan bahwa QR code telah berhasil dibuat dan disimpan
 
 def main():
     while True:  # Loop utama program
@@ -52,6 +57,7 @@ def main():
             generate_qr_code(data, filename)  # Panggil fungsi untuk membuat QR code
         elif choice == '2':  # Jika pilihan adalah 2, keluar dari program
             print("Exiting the program.")
+            logging.info("Program exited.")
             break
         else:
             print("Invalid choice. Please enter 1 or 2.")  # Pesan jika pilihan tidak valid
